@@ -1,7 +1,7 @@
-// Ajoute un écouteur d'événement pour exécuter la fonction lorsque le DOM est complètement chargé
+// écouteur d'événement pour exécuter la fonction lorsque le DOM est complètement chargé
 document.addEventListener('DOMContentLoaded', function () {
 
-	// Un tableau d'objets, chaque objet représentant une diapositive avec une image et une ligne d'étiquette
+	// tableau d'objets
 	const slidesData = [
 		{
 			"image": "slide1.jpg",
@@ -21,17 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	];
 
-	// L'indice de la diapositive actuelle dans le carrousel
+	// Index sur, pour afficher la première image
 	let currentSlideIndex = 0;
 
-	// Récupère les éléments du DOM et les stocke dans des constantes pour un accès facile
+	// Pour récuperer et stockez les éléments du DOM
 	const slidesContainer = document.querySelector("#banner .banner-img");
 	const tagLineContainer = document.querySelector("#banner p");
 	const dotsContainer = document.querySelector(".dots");
 	const arrowLeft = document.querySelector(".arrow_left");
 	const arrowRight = document.querySelector(".arrow_right");
 
-	// Définit une fonction pour charger une diapositive dans le carrousel
+	// fonction pour charger image dans le carrousel
 	function loadSlide(index) {
 		const slide = slidesData[index];
 		slidesContainer.src = `./assets/images/slideshow/${slide.image}`;
@@ -41,10 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		dotsContainer.children[index].classList.add('dot_selected');
 	}
 
-	// Crée des points pour chaque diapositive et ajoute un écouteur d'événement pour changer la diapositive lorsque le point est cliqué
+	// Crée des points et ajoute un écouteur d'événement pour changer l'image lorsque le point est cliqué
 	slidesData.forEach((slide, index) => {
 		const dot = document.createElement('span');
-		dot.classList.add('dot');
+		dot.classList.add('dot'); //permet d'ajouter la classe dot , pour pouvoir appliquer le css
 		dot.addEventListener('click', function () {
 			currentSlideIndex = index;
 			loadSlide(currentSlideIndex);
@@ -52,9 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		dotsContainer.appendChild(dot);
 	});
 
-	// Ajoute des écouteurs d'événement pour changer la diapositive lorsque les flèches sont cliquées
+
+	// Ajoute des écouteurs d'événement pour changer l'image lorsque les flèches sont cliquées
 	arrowLeft.addEventListener('click', function () {
+
+		//permet de passer à l'image précédente
 		currentSlideIndex--;
+
+		// vérifie si l'index de l'image est inférieur à 0
 		if (currentSlideIndex < 0) {
 			currentSlideIndex = slidesData.length - 1;
 		}
@@ -62,13 +67,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	arrowRight.addEventListener('click', function () {
+		//image suivant
 		currentSlideIndex++;
+
+		//vérifie si l'index à dépassé le nombre total d'image
 		if (currentSlideIndex >= slidesData.length) {
+
+			//si oui remt l'index à 0
 			currentSlideIndex = 0;
 		}
 		loadSlide(currentSlideIndex);
 	});
 
-	// Charge la première diapositive au démarrage
+	// Charge la première image au démarrage
 	loadSlide(currentSlideIndex);
 });
