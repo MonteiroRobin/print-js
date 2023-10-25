@@ -1,4 +1,7 @@
+// Ajoute un écouteur d'événement pour exécuter la fonction lorsque le DOM est complètement chargé
 document.addEventListener('DOMContentLoaded', function () {
+
+	// Un tableau d'objets, chaque objet représentant une diapositive avec une image et une ligne d'étiquette
 	const slidesData = [
 		{
 			"image": "slide1.jpg",
@@ -18,27 +21,30 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	];
 
+	// L'indice de la diapositive actuelle dans le carrousel
 	let currentSlideIndex = 0;
+
+	// Récupère les éléments du DOM et les stocke dans des constantes pour un accès facile
 	const slidesContainer = document.querySelector("#banner .banner-img");
 	const tagLineContainer = document.querySelector("#banner p");
 	const dotsContainer = document.querySelector(".dots");
 	const arrowLeft = document.querySelector(".arrow_left");
 	const arrowRight = document.querySelector(".arrow_right");
 
+	// Définit une fonction pour charger une diapositive dans le carrousel
 	function loadSlide(index) {
 		const slide = slidesData[index];
 		slidesContainer.src = `./assets/images/slideshow/${slide.image}`;
 		tagLineContainer.innerHTML = slide.tagLine;
 
-
 		dotsContainer.querySelectorAll('.dot').forEach(dot => dot.classList.remove('dot_selected'));
 		dotsContainer.children[index].classList.add('dot_selected');
 	}
 
-
+	// Crée des points pour chaque diapositive et ajoute un écouteur d'événement pour changer la diapositive lorsque le point est cliqué
 	slidesData.forEach((slide, index) => {
 		const dot = document.createElement('span');
-		dot.classList.add('dot');  // ajout de la classe
+		dot.classList.add('dot');
 		dot.addEventListener('click', function () {
 			currentSlideIndex = index;
 			loadSlide(currentSlideIndex);
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		dotsContainer.appendChild(dot);
 	});
 
+	// Ajoute des écouteurs d'événement pour changer la diapositive lorsque les flèches sont cliquées
 	arrowLeft.addEventListener('click', function () {
 		currentSlideIndex--;
 		if (currentSlideIndex < 0) {
@@ -62,6 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		loadSlide(currentSlideIndex);
 	});
 
-
+	// Charge la première diapositive au démarrage
 	loadSlide(currentSlideIndex);
 });
